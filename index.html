@@ -5,63 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>باسميات</title>
     <style>
-        /* هذا هو كود الـ CSS وضعناه داخل وسم style ليكون ملف واحد */
+        /* التنسيق العام للموقع */
         body {
             margin: 0;
             padding: 0;
-            background-color: #000; /* خلفية سوداء */
-            font-family: sans-serif;
+            background-color: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: white;
             text-align: center;
         }
 
-        /* شاشة الدخول */
+        /* شاشة الدخول (باسميات) */
         #intro-screen {
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: opacity 0.6s ease;
+            background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+            transition: opacity 0.5s ease;
         }
 
         #entry-text {
-            font-size: 5rem;
+            font-size: 3rem; 
             font-weight: bold;
-            transition: 0.3s;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            transition: 0.4s;
         }
 
-        #entry-text:hover { transform: scale(1.1); color: #888; }
+        /* نص "اضغط هنا" المنبض */
+        .hint-text {
+            font-size: 1rem;
+            color: #aaa;
+            border: 1px solid #333;
+            padding: 8px 20px;
+            border-radius: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.4; transform: scale(0.95); }
+        }
+
+        #intro-screen:hover #entry-text { color: #fff; transform: scale(1.05); }
 
         .hidden { display: none; }
 
-        /* معرض الصور */
+        /* معرض الصور (نظام Pinterest) */
         .masonry-grid {
             column-count: 3;
-            column-gap: 15px;
-            padding: 20px;
-            max-width: 1200px;
+            column-gap: 20px;
+            padding: 30px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
         .item {
             display: inline-block;
             width: 100%;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-radius: 15px;
             overflow: hidden;
-            transition: 0.3s;
+            background: #111;
+            transition: transform 0.3s ease;
         }
 
         .item img {
             width: 100%;
             display: block;
             border-radius: 15px;
+            transition: 0.5s;
         }
 
+        .item:hover { transform: translateY(-8px); }
+
+        header h2 {
+            font-size: 1.8rem;
+            margin-top: 50px;
+            color: #888;
+        }
+
+        /* تعديلات للجوال */
         @media (max-width: 768px) {
-            .masonry-grid { column-count: 2; }
-            #entry-text { font-size: 3rem; }
+            .masonry-grid { column-count: 2; padding: 15px; }
+            #entry-text { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -69,33 +100,37 @@
 
     <div id="intro-screen" onclick="showGallery()">
         <h1 id="entry-text">باسميات</h1>
+        <p class="hint-text">اضغط هنا للاستكشاف ↓</p>
     </div>
 
     <main id="main-content" class="hidden">
-        <header style="padding: 40px 0;">
-            <h2>ريم</h2>
+        <header>
+            <h2>المعرض الأسبوعي</h2>
         </header>
         
         <div class="masonry-grid">
-            <div class="item"><img src="1.jpg"></div>
-            <div class="item"><img src="2.jpg"></div>
             <div class="item"><img src="photo1.jpg"></div>
             <div class="item"><img src="photo2.jpg"></div>
+            <div class="item"><img src="photo3.jpg"></div>
+            <div class="item"><img src="photo4.jpg"></div>
+            <div class="item"><img src="photo5.jpg"></div>
         </div>
     </main>
 
     <script>
         function showGallery() {
-            // حركة لإخفاء كلمة باسميات وإظهار الصور
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('main-content').classList.remove('hidden');
+            const intro = document.getElementById('intro-screen');
+            const main = document.getElementById('main-content');
+            
+            // حركة إخفاء ناعمة
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                main.classList.remove('hidden');
+                // يخلي الصفحة تبدأ من فوق
+                window.scrollTo(0, 0);
+            }, 500);
         }
     </script>
 </body>
 </html>
-
-<div class="masonry-grid">
-    <div class="item"><img src="1.jpg"></div>
-    <div class="item"><img src="2.jpg"></div>
-    <div class="item"><img src="photo1.jpg"></div>
-    <div class="item"><img src="3.jpg"></div> </div>
